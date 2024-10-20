@@ -8,22 +8,39 @@ def upload_file(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file']
-            # Use pandas to read the uploaded file
-            data = pd.read_excel(file) if file.name.endswith('.xlsx') else pd.read_csv(file)
+            
+            try:
+                # Use pandas to read the uploaded file
+                if file.name.endswith('.xlsx'):
+                    data = pd.read_excel(file)
+                elif file.name.endswith('.csv'):
+                    data = pd.read_csv(file)
+                else:
+                    data = None
+                    return render(request, 'fileupload/error.html', {'error': 'Unsupported file format. Please upload .xlsx or .csv file.'})
+                
+                # Convert the DataFrame to HTML to display as a table
+                if data is not None:
+                    table = data.to_html(index=False)  # Convert DataFrame to HTML table
 
-            # Generate summary report
-            summary = data.describe().to_string()
+                    # Send email with a basic summary report
+                    row_count, col_count = data.shape
+                    email_subject = 'Python Assignment - SunithaDhannai'
+                    email_body = f'Excel file uploaded successfully.\nRows: {row_count}, Columns: {col_count}.'
+                    
+                    send_mail(
+                        email_subject,
+                        email_body,
+                        'dhannanisunitha6@gmail.com',  # Replace with your email
+                        ['tech@themedius.ai'],
+                    )
 
-            # Send email with the summary report as body text
-            send_mail(
-                'Python Assignment - SunithaDhannani',
-                summary,
-                'from@example.com',
-                ['tech@themedius.ai'],
-            )
-
-            return render(request, 'fileupload/success.html', {'summary': summary})
-
+                    # Render the table in the success page
+                    return render(request, 'fileupload/success.html', {'table': table})
+            except Exception as e:
+                # Handle any file processing errors
+                return render(request, 'fileupload/error.html', {'error': f'Error processing file: {str(e)}'})
+    
     else:
         form = UploadForm()
 

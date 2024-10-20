@@ -1,2 +1,6 @@
 <h2>File processed successfully!</h2>
-<pre>{{ summary }}</pre>
+
+<!-- Display the uploaded Excel data as an HTML table -->
+<div>
+    {{ table|safe }}
+</div>
