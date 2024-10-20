@@ -1,0 +1,36 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+h2 {
+    color: #007bff;
+}
+
+button {
+    border-radius: 5px;
+}
+.styled-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 25px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table th {
+    background-color: #4CAF50;
+    color: white;
+}

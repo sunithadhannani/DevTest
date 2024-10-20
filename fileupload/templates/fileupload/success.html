@@ -1,6 +1,35 @@
-<h2>File processed successfully!</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploaded Successfully</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 
-<!-- Display the uploaded Excel data as an HTML table -->
-<div>
-    {{ table|safe }}
-</div>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">File uploaded successfully!</h4>
+            <p>Your Excel/CSV file has been processed successfully. Below is the data from the uploaded file:</p>
+        </div>
+        
+        <!-- Table displaying the Excel data -->
+        <div class="table-responsive">
+            <table class="styled-table">
+                {{ table|safe }}
+            </table>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="/fileupload/upload" class="btn btn-primary">Upload Another File</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
